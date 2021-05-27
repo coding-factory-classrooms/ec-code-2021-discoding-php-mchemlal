@@ -10,6 +10,18 @@ class Conversation
     protected $interlocutor_username;
     protected $updated_at;
 
+    public function __construct( $conversation = null ) {
+
+        if( $conversation != null ):
+            $this->setId( isset( $conversation->id ) ? $conversation->id : null );
+            $this->setUserId( isset( $conversation->user_id) ? $conversation->user_id : null );
+            $this->setInterlocutorId( isset( $conversation->interlocutor_id) ? $conversation->interlocutor_id : null );
+            $this->setInterlocutorUsername( isset( $conversation->interlocutor_username) ? $conversation->interlocutor_username : null );
+            $this->setUpdatedAt(isset( $conversation->updated_at) ? $conversation->updated_at : null );
+          
+        endif;
+      }
+
     /**
      * @return mixed
      */
@@ -114,7 +126,9 @@ class Conversation
     {
         $db = init_db();
 
-        $req = $db->prepare("SELECT c.id , u.id as interlocutor_id, u.username as interlocutor_username , u.avatar_url as interlocutor_avatar_url, c.updated_at FROM conversations as c JOIN users as u ON (c.user1_id = u.id OR c.user2_id = u.id) WHERE (c.id = ?) AND u.id != ?");
+        $req = $db->prepare("SELECT c.id , u.id as interlocutor_id, u.username as interlocutor_username , u.avatar_url as interlocutor_avatar_url, c.updated_at 
+                                FROM conversations as c JOIN users as u ON (c.user1_id = u.id OR c.user2_id = u.id) 
+                                WHERE (c.id = ?) AND u.id != ?");
         $req->execute([
                 $conversation_id,
                 $user_id

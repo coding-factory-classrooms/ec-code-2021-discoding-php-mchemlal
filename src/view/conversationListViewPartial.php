@@ -9,7 +9,7 @@
         </li>
     </ul>
     <ul class="list-group border-0">
-        <? foreach ($conversations as $conv): ?>
+        <?php foreach ($conversations as $conv): ?>
             <li class="list-group-item border-0">
 
                 <a href="/index.php?action=conversation&sub_action=detail&conversation_id=<?= $conv['id']; ?>"
@@ -25,7 +25,7 @@
                     <?= $conv['interlocutor_username']; ?>
                 </a>
             </li>
-        <? endforeach; ?>
+        <?php endforeach; ?>
     </ul>
 </div>
 <?php $conversation_list_content = ob_get_clean(); ?>

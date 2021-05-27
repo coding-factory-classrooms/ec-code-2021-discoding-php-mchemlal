@@ -120,4 +120,26 @@ class Message
         return $message;
     }
 
+    public static function sendActivationMail($email, $key){
+        $destinataire = $email;
+        $sujet = "Activer votre compte" ;
+        $entete = "From: inscription@discoding.com" ;
+        $message = 'Bienvenue sur Discoding
+     
+        Pour activer votre compte, veuillez cliquer sur le lien ci-dessous
+        ou copier/coller dans votre navigateur Internet.
+        
+        http://localhost:8888/index.php?action=activate&email='.urlencode($email).'&key='.urlencode($key).'
+        
+        
+        ---------------
+        Ceci est un mail automatique, Merci de ne pas y répondre.';
+     
+        //envoi du mail d'activation
+        mail($destinataire, $sujet, $message, $entete) ;
+      }
+
+
 }
+
+

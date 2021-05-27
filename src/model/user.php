@@ -5,10 +5,24 @@ require_once('database.php');
 class User
 {
     protected $id;
-    protected $email;
     protected $username;
+    protected $email;
     protected $password;
+    protected $active_key;
+    protected $isActive;
     protected $avatar_url;
+
+    public function __construct( $user = null ) {
+        if( $user != null ):
+          $this->setId( isset( $user->id ) ? $user->id : null );
+          $this->setUsername( isset( $user->username ) ? $user->username : null );
+          $this->setEmail( isset($user->email) ? $user->email : null );
+          $this->setPassword( isset( $user->password ) ? $user->password : null );
+          $this->setActiveKey( isset($user->active_key) ? $user->active_key  : null);
+          $this->setActive( isset($user->isActive) ? $user->isActive : null );
+          $this->setAvatarUrl( isset($user->avatar_url) ? $user->avatar_url : null );
+        endif;
+      }
 
     /**
      * @return mixed
@@ -25,6 +39,7 @@ class User
     {
         $this->id = $id;
     }
+
 
     /**
      * @return mixed
@@ -55,7 +70,7 @@ class User
      */
     public function setUsername($username)
     {
-        $this->username = $username;
+        $this->username = $username.'#'.rand(1000,9999);
     }
 
     /**
@@ -72,6 +87,36 @@ class User
     public function setPassword($password)
     {
         $this->password = $password;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getActiveKey()
+    {
+        return $this->active_key;
+    }
+
+    /**
+     * @param mixed $password
+     */
+    public function setActiveKey($active_key)
+    {
+        $this->active_key = $active_key;
+    }
+
+    public function getActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param mixed $password
+     */
+    public function setActive($isActive)
+    {
+        $this->isActive = $isActive;
     }
 
     /**
@@ -100,8 +145,22 @@ class User
         // Open database connection
         $db = init_db();
 
-        $req = $db->prepare("SELECT * FROM users WHERE id = ?");
+        $req = $db->prepare("SELECT * FROM user WHERE id = ?");
         $req->execute([$id]);
+
+        // Close database connection
+        $db = null;
+
+        return $req->fetch();
+    }
+
+    public static function getUserByEmail($email)
+    {
+        // Open database connection
+        $db = init_db();
+
+        $req = $db->prepare("SELECT * FROM user WHERE email = ?");
+        $req->execute(array($email));
 
         // Close database connection
         $db = null;
@@ -118,7 +177,7 @@ class User
         // Open database connection
         $db = init_db();
 
-        $req = $db->prepare("SELECT * FROM users WHERE email=? AND password=?");
+        $req = $db->prepare("SELECT * FROM user WHERE email=? AND password=?");
         $req->execute([
             $email,
             $password
@@ -135,7 +194,7 @@ class User
         // Open database connection
         $db = init_db();
 
-        $req = $db->prepare("SELECT users.* FROM users LEFT JOIN friends ON users.id = friends.friend_user_id WHERE friends.user_id = ?");
+        $req = $db->prepare("SELECT user.* FROM user LEFT JOIN friends ON user.id = friends.friend_user_id WHERE friends.user_id = ?");
         $req->execute([$user_id]);
 
         // Close database connection
@@ -149,7 +208,7 @@ class User
         // Open database connection
         $db = init_db();
 
-        $req = $db->prepare("SELECT * FROM users WHERE username = ?");
+        $req = $db->prepare("SELECT * FROM user WHERE username = ?");
         $req->execute([$username]);
 
         // Close database connection
@@ -197,4 +256,77 @@ class User
 
         return $id;
     }
+
+    public function createUser() {
+        $db = init_db();
+        $avatar = '/static/img/anonyme_avatar.png';
+
+        // Check if email already exist
+        $req  = $db->prepare( "SELECT * FROM user WHERE email = ? " );
+        $req->execute( array( $this->getEmail()));
+    
+        if( $req->rowCount() > 0 ) :
+          return false;
+        else : 
+          $req->closeCursor();
+          // Insert new user
+          $req  = $db->prepare( "INSERT INTO user ( email, username, password, activation_key, active, avatar_url ) 
+                                    VALUES (:email,  :username, :password, :active_key, :activate, :avatar)" );
+          $req->execute(array(
+            'username' => $this->getUsername(),
+            'email'     => $this->getEmail(),
+            'password'  => $this->hash($this->getPassword()),
+            'active_key' => $this->getActiveKey(),
+            'activate' => $this->getActive(),
+            'avatar' => $avatar
+            ));
+          return true;
+        endif;
+      }
+
+      //generer clé activation compte
+      public static function generateKey(){
+        $db = init_db();
+
+        $generKey = md5(microtime(TRUE)*1000);
+        return $generKey;
+      }
+
+      
+      //fonction de hachage password
+      public static function hash($password) {
+        $begin_password = substr($password, 3, strlen($password));
+        $end_password   = substr($password, 0,3);
+    
+        $salt = $begin_password.$password.$end_password;
+        return hash('sha256', $salt);
+      }
+
+      //verifiezr la clé
+      public function checkKey($email, $key){
+        $db = init_db();
+
+        $req  = $db->prepare( "SELECT activation_key, active FROM user 
+                                           WHERE email = ?" );
+        $req->execute(array($email));
+        $row = $req->fetch();
+        if($row['active'] == 1 ){
+          return false;
+        }else{
+          if($row['activation_key'] == $key){
+            $req->closeCursor();
+            $req  =  $db->prepare("UPDATE user SET active = 1 WHERE email = ? ");
+            $req->execute(array($email));
+            return true;
+          }
+        }
+      }
+
+       //on insere la clé 
+  public function addKey($key, $email){
+    $db = init_db();
+    $req = $db->prepare("UPDATE user SET activation_key = ? WHERE email = ?");
+    $req->execute(array($key, $email));
+  }
+    
 }

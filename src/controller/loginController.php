@@ -21,21 +21,29 @@ function loginPage()
 
 function login($post)
 {
+$data = new stdClass();
+  $data->email    = htmlspecialchars(strip_tags($post['email']));
+  $data->password = User::hash(htmlspecialchars(strip_tags($post['password'])));
 
-    $email = $post['email'];
-    $password = $post['password'];
-    $user_data = User::getUserByCredentials($email, $password);
+  $user = new User( $data );
+  $userData = $user->getUserByEmail($data->email );
 
-    if ($user_data == null) {
-        $error_msg = "Email ou mot de passe incorrect";
-        require('view/loginView.php');
-        return;
+  if(!empty($userData)){
+      if( $user->getPassword() == $userData['password'] ){
+          if($userData['active'] == 1) {
+              // Set session
+              $_SESSION['user_id'] = $userData['id'];
+              header('Location:index.php');
+          }else{
+            $msg = "Vous devez activer votre compte";
+          }
+        }else{
+            $msg = "Les informations ne sont pas reconnues";
+        }
+    }else{
+    $msg = "Remplir tous les champs";
     }
-
-    // Set session
-    $_SESSION['user_id'] = $user_data['id'];
-    $user_id = $_SESSION['user_id'] ?? false;
-    header('location: index.php ');
+    require('view/loginView.php');
 }
 
 /****************************

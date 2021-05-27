@@ -45,9 +45,13 @@ function conversationDetail($user_id)
 {
     $conversation_id = $_GET['conversation_id'];
     $conversation = Conversation::getConversationForUser($conversation_id, $user_id);
+    var_dump($conversation);
     $messages = Message::getMessagesForConversationId($conversation_id);
+    var_dump($messages);
     $user = User::getUserById($user_id);
+    var_dump($user);
     $interlocutor = User::getUserById($conversation['interlocutor_id']);
+    var_dump($interlocutor);
     $conversation_list_partial = conversationListPartial($user_id);
     require('view/conversationView.php');
 }

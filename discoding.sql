@@ -1,15 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 4.9.5
 -- https://www.phpmyadmin.net/
 --
--- Host: db
--- Generation Time: May 25, 2021 at 10:24 AM
--- Server version: 8.0.25
--- PHP Version: 7.4.16
+-- Hôte : localhost:8889
+-- Généré le : mer. 26 mai 2021 à 08:39
+-- Version du serveur :  5.7.30
+-- Version de PHP : 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -18,24 +17,24 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `discoding`
+-- Base de données : `discoding`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `conversations`
+-- Structure de la table `conversations`
 --
 
 CREATE TABLE `conversations` (
-  `id` int NOT NULL,
-  `user1_id` int NOT NULL,
-  `user2_id` int NOT NULL,
+  `id` int(11) NOT NULL,
+  `user1_id` int(11) NOT NULL,
+  `user2_id` int(11) NOT NULL,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
--- Dumping data for table `conversations`
+-- Déchargement des données de la table `conversations`
 --
 
 INSERT INTO `conversations` (`id`, `user1_id`, `user2_id`, `updated_at`) VALUES
@@ -45,17 +44,17 @@ INSERT INTO `conversations` (`id`, `user1_id`, `user2_id`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `friends`
+-- Structure de la table `friends`
 --
 
 CREATE TABLE `friends` (
-  `id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `friend_user_id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `friend_user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
--- Dumping data for table `friends`
+-- Déchargement des données de la table `friends`
 --
 
 INSERT INTO `friends` (`id`, `user_id`, `friend_user_id`) VALUES
@@ -65,19 +64,19 @@ INSERT INTO `friends` (`id`, `user_id`, `friend_user_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `messages`
+-- Structure de la table `messages`
 --
 
 CREATE TABLE `messages` (
-  `id` int NOT NULL,
-  `conversation_id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `content` text NOT NULL,
+  `id` int(11) NOT NULL,
+  `conversation_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `content` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `created_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
--- Dumping data for table `messages`
+-- Déchargement des données de la table `messages`
 --
 
 INSERT INTO `messages` (`id`, `conversation_id`, `user_id`, `content`, `created_at`) VALUES
@@ -87,19 +86,19 @@ INSERT INTO `messages` (`id`, `conversation_id`, `user_id`, `content`, `created_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Structure de la table `users`
 --
 
 CREATE TABLE `users` (
-  `id` int NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `avatar_url` varchar(500) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id` int(11) NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `username` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `avatar_url` varchar(500) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
--- Dumping data for table `users`
+-- Déchargement des données de la table `users`
 --
 
 INSERT INTO `users` (`id`, `email`, `username`, `password`, `avatar_url`) VALUES
@@ -108,11 +107,11 @@ INSERT INTO `users` (`id`, `email`, `username`, `password`, `avatar_url`) VALUES
 (3, 'bob@bob.com', 'bob', 'bob', NULL);
 
 --
--- Indexes for dumped tables
+-- Index pour les tables déchargées
 --
 
 --
--- Indexes for table `conversations`
+-- Index pour la table `conversations`
 --
 ALTER TABLE `conversations`
   ADD PRIMARY KEY (`id`),
@@ -120,7 +119,7 @@ ALTER TABLE `conversations`
   ADD KEY `fk_conversations_to_user2_id` (`user2_id`);
 
 --
--- Indexes for table `friends`
+-- Index pour la table `friends`
 --
 ALTER TABLE `friends`
   ADD PRIMARY KEY (`id`),
@@ -128,7 +127,7 @@ ALTER TABLE `friends`
   ADD KEY `fk_friends_to_friend_user_id` (`friend_user_id`);
 
 --
--- Indexes for table `messages`
+-- Index pour la table `messages`
 --
 ALTER TABLE `messages`
   ADD PRIMARY KEY (`id`),
@@ -136,64 +135,63 @@ ALTER TABLE `messages`
   ADD KEY `fk_messages_to_user_id` (`user_id`);
 
 --
--- Indexes for table `users`
+-- Index pour la table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT pour les tables déchargées
 --
 
 --
--- AUTO_INCREMENT for table `conversations`
+-- AUTO_INCREMENT pour la table `conversations`
 --
 ALTER TABLE `conversations`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `friends`
+-- AUTO_INCREMENT pour la table `friends`
 --
 ALTER TABLE `friends`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `messages`
+-- AUTO_INCREMENT pour la table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- Constraints for dumped tables
+-- Contraintes pour les tables déchargées
 --
 
 --
--- Constraints for table `conversations`
+-- Contraintes pour la table `conversations`
 --
 ALTER TABLE `conversations`
   ADD CONSTRAINT `fk_to_user1_id` FOREIGN KEY (`user1_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_to_user2_id` FOREIGN KEY (`user2_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `friends`
+-- Contraintes pour la table `friends`
 --
 ALTER TABLE `friends`
   ADD CONSTRAINT `fk_to_friend_user_id` FOREIGN KEY (`friend_user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_to_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `messages`
+-- Contraintes pour la table `messages`
 --
 ALTER TABLE `messages`
   ADD CONSTRAINT `fk_messages_to_conversation_id` FOREIGN KEY (`conversation_id`) REFERENCES `conversations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_messages_to_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
