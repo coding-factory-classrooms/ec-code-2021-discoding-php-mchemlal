@@ -1,8 +1,6 @@
 <?php
-
 session_start();
 
-require_once('model/user.php');
 
 /****************************
  * ----- LOAD LOGIN PAGE -----
@@ -10,8 +8,9 @@ require_once('model/user.php');
 
 function loginPage()
 {
-    $user = new stdClass();
-    $user->id = $_SESSION['user_id'] ?? false;
+
+    // $user = new stdClass();
+    // $user->id = $_SESSION['user_id'] ?? false;
     require('view/loginView.php');
 }
 
@@ -21,7 +20,8 @@ function loginPage()
 
 function login($post)
 {
-$data = new stdClass();
+
+ $data = new stdClass();
   $data->email    = htmlspecialchars(strip_tags($post['email']));
   $data->password = User::hash(htmlspecialchars(strip_tags($post['password'])));
 
@@ -33,6 +33,7 @@ $data = new stdClass();
           if($userData['active'] == 1) {
               // Set session
               $_SESSION['user_id'] = $userData['id'];
+              $_SESSION['username'] = $userData['username'];
               header('Location:index.php');
           }else{
             $msg = "Vous devez activer votre compte";
@@ -54,6 +55,7 @@ function logout()
 {
     $_SESSION = array();
     session_destroy();
+    session_unset();
 
-    header('location: index.php');
+    header('location: index.php?action=login');
 }

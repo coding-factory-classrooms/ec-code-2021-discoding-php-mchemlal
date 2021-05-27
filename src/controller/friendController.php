@@ -1,6 +1,5 @@
 <?php
 
-require_once('model/user.php');
 require_once('conversationController.php');
 
 function friendPage()
@@ -26,16 +25,25 @@ function addFriend($user_id)
 {
     $message = '';
     $username = $_POST['username'] ?? '';
-    if ($username != '') {
+    if (!empty($username)) :
         // FIXME What happens if the user does not exist?
-        $newFriend = User::findUserWithUsername($username);
-        if (User::isAlreadyFriend($user_id, $newFriend['id'])) {
-            $message = 'Déjà ami avec ' . $newFriend['username'] . ' !';
-        } else {
-            User::addFriend($user_id, $newFriend['id']);
-            $message = 'Ami ' . $newFriend['username'] . ' ajouté !';
-        }
-    }
+            $newFriend = User::findUserWithUsername($username);
+            var_dump($newFriend);
+            if($newFriend != false):
+        
+                if (User::isAlreadyFriend($user_id, $newFriend['id'])) :
+                    $message = 'Déjà ami avec ' . $newFriend['username'] . ' !';
+                else :
+                    User::addFriend($user_id, $newFriend['id']);
+                    $message = 'Ami ' . $newFriend['username'] . ' ajouté !';
+                endif;
+            else:
+                $message = 'L\'utilisateur n\'a pas été trouvé !';
+            endif;
+    endif;
+    
+ 
+     
 
     $conversation_list_partial = conversationListPartial($user_id);
     require('view/friendAddView.php');
@@ -47,4 +55,9 @@ function displayFriends($user_id)
     $friends = User::getFriendsForUser($user_id);
     $conversation_list_partial = conversationListPartial($user_id);
     require('view/friendView.php');
+}
+
+function searchFriend($post){
+    echo 'salut ouais';
+require 'view/friendView.php';  
 }

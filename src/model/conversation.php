@@ -126,9 +126,7 @@ class Conversation
     {
         $db = init_db();
 
-        $req = $db->prepare("SELECT c.id , u.id as interlocutor_id, u.username as interlocutor_username , u.avatar_url as interlocutor_avatar_url, c.updated_at 
-                                FROM conversations as c JOIN users as u ON (c.user1_id = u.id OR c.user2_id = u.id) 
-                                WHERE (c.id = ?) AND u.id != ?");
+        $req = $db->prepare("SELECT c.id , u.id as interlocutor_id, u.username as interlocutor_username , u.avatar_url as interlocutor_avatar_url, c.updated_at FROM conversations as c JOIN users as u ON (c.user1_id = u.id OR c.user2_id = u.id) WHERE (c.id = ?) AND u.id != ?");
         $req->execute([
                 $conversation_id,
                 $user_id
@@ -175,5 +173,4 @@ class Conversation
 
         return $conversation_id;
     }
-
 }

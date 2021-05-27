@@ -12,6 +12,8 @@ require_once('controller/signupController.php');
 require_once('controller/activationController.php');
 require_once('controller/contactUserController.php');
 
+
+
 if (isset($_GET['action'])) {
     switch ($_GET['action']) {
         case 'login':
@@ -58,9 +60,14 @@ if (isset($_GET['action'])) {
             break;
     }
 } else {
+    
+    
+    
     $user_id = $_SESSION['user_id'] ?? false;
+    var_dump($user_id);
 
-    if ($user_id) {
+    if ($user_id){
+        var_dump($user_id);
         friendPage();
     } else {
         loginPage();

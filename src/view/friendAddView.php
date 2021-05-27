@@ -13,6 +13,10 @@
                     <a href="#" class="btn btn-success disabled">Add a Friend</a>
                     </btn>
                 </div>
+                <div class="col-2 align-self-center d-flex justify-content-end">
+                    <a href="#" class="btn btn-success disabled">Add a Friend</a>
+                    </btn>
+                </div>
             </div>
             <form method="post">
                 <div class="mb-3">

@@ -120,6 +120,8 @@ class Message
         return $message;
     }
 
+
+
     public static function sendActivationMail($email, $key){
         $destinataire = $email;
         $sujet = "Activer votre compte" ;

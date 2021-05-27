@@ -145,7 +145,7 @@ class User
         // Open database connection
         $db = init_db();
 
-        $req = $db->prepare("SELECT * FROM user WHERE id = ?");
+        $req = $db->prepare("SELECT * FROM users WHERE id = ?");
         $req->execute([$id]);
 
         // Close database connection
@@ -159,7 +159,7 @@ class User
         // Open database connection
         $db = init_db();
 
-        $req = $db->prepare("SELECT * FROM user WHERE email = ?");
+        $req = $db->prepare("SELECT * FROM users WHERE email = ?");
         $req->execute(array($email));
 
         // Close database connection
@@ -177,7 +177,7 @@ class User
         // Open database connection
         $db = init_db();
 
-        $req = $db->prepare("SELECT * FROM user WHERE email=? AND password=?");
+        $req = $db->prepare("SELECT * FROM users WHERE email=? AND password=?");
         $req->execute([
             $email,
             $password
@@ -194,7 +194,7 @@ class User
         // Open database connection
         $db = init_db();
 
-        $req = $db->prepare("SELECT user.* FROM user LEFT JOIN friends ON user.id = friends.friend_user_id WHERE friends.user_id = ?");
+        $req = $db->prepare("SELECT users.* FROM users LEFT JOIN friends ON users.id = friends.friend_user_id WHERE friends.user_id = ?");
         $req->execute([$user_id]);
 
         // Close database connection
@@ -208,7 +208,7 @@ class User
         // Open database connection
         $db = init_db();
 
-        $req = $db->prepare("SELECT * FROM user WHERE username = ?");
+        $req = $db->prepare("SELECT * FROM users WHERE username = ?");
         $req->execute([$username]);
 
         // Close database connection
@@ -259,10 +259,10 @@ class User
 
     public function createUser() {
         $db = init_db();
-        $avatar = '/static/img/anonyme_avatar.png';
+        $avatar = '/static/img/discord_logo.png';
 
         // Check if email already exist
-        $req  = $db->prepare( "SELECT * FROM user WHERE email = ? " );
+        $req  = $db->prepare( "SELECT * FROM users WHERE email = ? " );
         $req->execute( array( $this->getEmail()));
     
         if( $req->rowCount() > 0 ) :
@@ -270,7 +270,7 @@ class User
         else : 
           $req->closeCursor();
           // Insert new user
-          $req  = $db->prepare( "INSERT INTO user ( email, username, password, activation_key, active, avatar_url ) 
+          $req  = $db->prepare( "INSERT INTO users ( email, username, password, activation_key, active, avatar_url ) 
                                     VALUES (:email,  :username, :password, :active_key, :activate, :avatar)" );
           $req->execute(array(
             'username' => $this->getUsername(),
@@ -306,7 +306,7 @@ class User
       public function checkKey($email, $key){
         $db = init_db();
 
-        $req  = $db->prepare( "SELECT activation_key, active FROM user 
+        $req  = $db->prepare( "SELECT activation_key, active FROM users 
                                            WHERE email = ?" );
         $req->execute(array($email));
         $row = $req->fetch();
@@ -315,7 +315,7 @@ class User
         }else{
           if($row['activation_key'] == $key){
             $req->closeCursor();
-            $req  =  $db->prepare("UPDATE user SET active = 1 WHERE email = ? ");
+            $req  =  $db->prepare("UPDATE users SET active = 1 WHERE email = ? ");
             $req->execute(array($email));
             return true;
           }
@@ -325,7 +325,7 @@ class User
        //on insere la clé 
   public function addKey($key, $email){
     $db = init_db();
-    $req = $db->prepare("UPDATE user SET activation_key = ? WHERE email = ?");
+    $req = $db->prepare("UPDATE users SET activation_key = ? WHERE email = ?");
     $req->execute(array($key, $email));
   }
     
