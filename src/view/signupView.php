@@ -16,7 +16,11 @@
                     <label for="email" class="form-label text-muted small text-uppercase">Email</label>
                     <input type="email" class="form-control" id="email" name="email" maxlength="30" value="<?= isset($_POST['email']) ? $_POST['email'] : '' ?>" required/>
                 </div>
-
+                <div class="mb-3">
+                    <label for="text" class="form-label text-muted small text-uppercase">upload your avatar URL</label>
+                    <input type="text" class="form-control" id="avatar_url" name="avatar_url" value="<?= isset($_POST['avatar_url']) ? $_POST['avatar_url'] : '' ?>" required/>
+                </div>
+                
                 <div class="mb-3">
                     <label for="password" class="form-label text-muted small text-uppercase">Password</label>
                     <input type="password" class="form-control" id="password" name="password" maxlength="30" value="<?= isset($_POST['password']) ? $_POST['password'] : '' ?>" required/>

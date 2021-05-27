@@ -15,6 +15,7 @@ function signup($post){
             // on remplit les attributs de cet objet data avec les champs formulaires
             $data->username    = isset($post['username']) ? htmlspecialchars(strip_tags($post['username'])) : null;
             $data->email    = isset($post['email']) ? htmlspecialchars(strip_tags($post['email'])) : null;
+            $data->avatar_url = isset($post['avatar_url']) ? htmlspecialchars(strip_tags($post['avatar_url'])) : null;
             $data->password = isset($post['password']) ? htmlspecialchars(strip_tags($post['password'])) : null;
             $data->active_key = htmlspecialchars(strip_tags(User::generateKey()));
             $data->isActive = 0;
@@ -24,7 +25,7 @@ function signup($post){
 
 
         //si le formulaire est rempli
-        if( $data->email != null || $data->password != null || $confirmPass != null|| $data->username != null){
+        if( $data->avatar_url != null || $data->email != null || $data->password != null || $confirmPass != null|| $data->username != null){
             // si le confirm est egal au password user 
             if( $user->getPassword() == $confirmPass){
                 // si adresse dispo

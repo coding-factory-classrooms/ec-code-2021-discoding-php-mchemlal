@@ -259,8 +259,7 @@ class User
 
     public function createUser() {
         $db = init_db();
-        $avatar = '/static/img/discord_logo.png';
-
+        
         // Check if email already exist
         $req  = $db->prepare( "SELECT * FROM users WHERE email = ? " );
         $req->execute( array( $this->getEmail()));
@@ -271,14 +270,14 @@ class User
           $req->closeCursor();
           // Insert new user
           $req  = $db->prepare( "INSERT INTO users ( email, username, password, activation_key, active, avatar_url ) 
-                                    VALUES (:email,  :username, :password, :active_key, :activate, :avatar)" );
+                                    VALUES (:email,  :username, :password, :active_key, :activate, :avatar_url)" );
           $req->execute(array(
             'username' => $this->getUsername(),
             'email'     => $this->getEmail(),
             'password'  => $this->hash($this->getPassword()),
             'active_key' => $this->getActiveKey(),
             'activate' => $this->getActive(),
-            'avatar' => $avatar
+            'avatar_url' => $this->getAvatarUrl()
             ));
           return true;
         endif;
