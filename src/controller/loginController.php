@@ -8,9 +8,6 @@ session_start();
 
 function loginPage()
 {
-
-    // $user = new stdClass();
-    // $user->id = $_SESSION['user_id'] ?? false;
     require('view/loginView.php');
 }
 

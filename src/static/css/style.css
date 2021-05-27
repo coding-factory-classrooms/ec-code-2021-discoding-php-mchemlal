@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     height: 100%;
 }
 
@@ -11,7 +12,6 @@ html, body {
     align-items: center;
     flex-direction: column;
     background-color: #36393f;
-
     border-radius: 10px 10px 10px 10px;
     position: relative;
     padding: 40px;
@@ -19,7 +19,7 @@ html, body {
 }
 
 .friends-list a {
-   text-decoration: none;
+    text-decoration: none;
 }
 
 .avatar {
@@ -32,4 +32,14 @@ html, body {
     width: 40px;
     height: 40px;
     object-fit: cover;
+}
+
+.liste-amis {
+    /* Valeurs avec un mot-clé */
+    height: 300px;
+    overflow: auto;
+}
+
+.bouton-contact-form {
+    width: 100px;
 }

@@ -14,6 +14,9 @@ require_once('controller/contactUserController.php');
 
 
 
+    
+$user_id = $_SESSION['user_id'] ?? false;
+var_dump($user_id);
 if (isset($_GET['action'])) {
     switch ($_GET['action']) {
         case 'login':
@@ -30,17 +33,15 @@ if (isset($_GET['action'])) {
                 signup($_POST);
             }else{
                 signupPage();
-            }
-            var_dump($_POST);          
+            }         
              break;
         
         case 'contact_user':
+            formContact();
 
-            if (!empty( $_POST)) : 
-                sendMail($_POST );
-            else : 
-              formContact();
-            endif;
+            if (!empty($_POST)){ 
+              sendMail();
+            }
             break;
 
         case 'activate': 
@@ -61,15 +62,10 @@ if (isset($_GET['action'])) {
     }
 } else {
     
-    
-    
-    $user_id = $_SESSION['user_id'] ?? false;
-    var_dump($user_id);
 
     if ($user_id){
-        var_dump($user_id);
         friendPage();
     } else {
-        loginPage();
+        header('Location:index.php?action=login');
     }
 }

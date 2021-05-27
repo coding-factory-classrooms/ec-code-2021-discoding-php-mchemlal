@@ -7,8 +7,20 @@
                 <i class="bi-people-fill mx-2"></i>Friends
             </a>
         </li>
+
+        <li class="list-group-item">
+            <a href="/index.php?action=contact_user">
+                <i class="bi-people-fill mx-2"></i>Contact
+            </a>
+        </li>
+        
+        <li class="list-group-item">
+            <a href="/index.php?action=logout">
+                <i class="bi-people-fill mx-2"></i>Logout
+            </a>
+        </li>
     </ul>
-    <ul class="list-group border-0">
+    <ul class="list-group border-0 liste-amis">
         <?php foreach ($conversations as $conv): ?>
             <li class="list-group-item border-0">
 
@@ -29,3 +41,5 @@
     </ul>
 </div>
 <?php $conversation_list_content = ob_get_clean(); ?>
+
+

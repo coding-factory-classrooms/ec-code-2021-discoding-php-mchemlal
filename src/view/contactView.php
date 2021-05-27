@@ -2,14 +2,14 @@
 <div class="container-fluid d-flex h-100 characterBackground mt-5">
     <div class="row align-self-center w-100">
         <div class="col-md-4 mx-auto auth-container">
-            <h3>Welcome back!
+            <h3>Contact Form
             </h3>
-            <p class="text-muted">We're so excited to see you again!</p>
+            <p class="text-muted">Feel free to reach out if needed !</p>
             <form method="POST" action="" id="form" class="custom-form" >
 
             <div class="form-group">
               <label for="lastPass">Expediteur</label>
-              <input type="text" name="expediteur" id="expediteur" class="form-control" 
+              <input type="text" name="expediteur" value="<?= $userData['email'];?>" id="expediteur" class="form-control" 
               maxlength="50" style="font-style:italic;"/>
             </div>
             <div class="form-group">
@@ -30,9 +30,13 @@
 
             <div class="form-group">
               <div class="row">
-                <div class="col-md-6">
-                   <a href="index.php?action=login" class="btn btn-primary btn-lg btn-block w-100 mb-2">COUCOU</a>
-                   <button name="submit" type="submit" class="btn btn-primary btn-lg btn-block w-100">SEND</button>
+                <div class="col-md">
+                    <button name="submit" type="submit" class="btn btn-primary btn-lg btn-block w-100">SEND</button>
+                    <?php if(!isset($_SESSION['user_id'])): ?>
+                        <a href="index.php?action=login" class="btn btn-primary btn-lg btn-block w-100 mt-2">LOGIN</a>
+                    <?php else: ?>
+                        <a href="index.php?action=friend" class="btn btn-primary btn-lg btn-block w-100 mt-2">BACK</a>
+                    <?php endif; ?>
                 </div>
             </div>
 

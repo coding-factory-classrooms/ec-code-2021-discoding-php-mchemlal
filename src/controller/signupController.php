@@ -44,8 +44,4 @@ function signup($post){
 
         require('view/signupView.php');
 }
-
-
-
-
 ?>
