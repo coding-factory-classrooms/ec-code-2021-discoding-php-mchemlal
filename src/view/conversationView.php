@@ -1,11 +1,11 @@
 <?php ob_start(); ?>
 
-<div class="container-fluid">
+<div class="container-fluid ">
     <div class="row">
 
         <?= $conversation_list_partial ?>
 
-        <div class="col-sm-6 col-md-9 mt-2">
+        <div class="col-sm-6 col-md-9 mt-2" style="overflow: auto; height: 650px;">
             <div class="row m-auto">
                 <h3><?= $interlocutor['username'] ?></h3>
 
@@ -78,7 +78,8 @@
                 <?php endforeach; ?>
 
             </div>
-            <form class="d-flex mt-3" action="/index.php?action=conversation&sub_action=add_message&conversation_id=<?= $conversation_id ?>" method="post">
+            
+            <form class="d-flex mt-4" action="/index.php?action=conversation&sub_action=add_message&conversation_id=<?= $conversation_id ?>" method="post">
                 <div class="flex-grow-1">
                     <input type="text" class="form-control" id="content" name="content"/>
                 </div>
@@ -86,6 +87,8 @@
                     <button id="sendMessage" type="submit" class="btn btn-secondary">Envoyer</button>
                 </div>
             </form>
+            
+
         </div>
     </div>
 </div>
