@@ -11,6 +11,7 @@ require_once('controller/loginController.php');
 require_once('controller/signupController.php');
 require_once('controller/activationController.php');
 require_once('controller/contactUserController.php');
+require_once('controller/page404Controller.php');
 
 
 
@@ -60,6 +61,8 @@ if (isset($_GET['action'])) {
         case 'friend':
             friendPage();
             break;
+        default:
+            page404();
     }
 } else {
     
