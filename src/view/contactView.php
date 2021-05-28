@@ -10,7 +10,7 @@
             <div class="form-group">
               <label for="lastPass">Expediteur</label>
               <?php if(isset($_SESSION['user_id'])) : ?>
-              <input type="text" name="expediteur" value="<?= $userData['email'];?>" id="expediteur" class="form-control" 
+              <input type="text" name="expediteur" value="<?= $emailDeSession;?>" id="expediteur" class="form-control" 
               maxlength="50" style="font-style:italic;"/>
               <?php else: ?>
               <input type="text" name="expediteur" value="" id="expediteur" class="form-control" 
@@ -50,7 +50,7 @@
               <?= isset( $message_erreur ) ? $message_erreur : ''; ?>
             </span>
             <span class="error-msg" id="result">
-              <?= isset( $success_msg ) ? $success_msg : ''; ?>
+              <?= isset( $msg ) ? $msg : ''; ?>
             </span>
           </form>
         </div>

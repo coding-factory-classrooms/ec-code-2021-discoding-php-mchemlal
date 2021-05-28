@@ -16,7 +16,6 @@ require_once('controller/contactUserController.php');
 
     
 $user_id = $_SESSION['user_id'] ?? false;
-var_dump($user_id);
 if (isset($_GET['action'])) {
     switch ($_GET['action']) {
         case 'login':
@@ -37,10 +36,11 @@ if (isset($_GET['action'])) {
              break;
         
         case 'contact_user':
-            formContact();
-
-            if (!empty($_POST)){ 
-              sendMail();
+            
+            if (!empty($user_id)){ 
+                formContact($_POST);
+            }else{
+                sendMail();
             }
             break;
 
