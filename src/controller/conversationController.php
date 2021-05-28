@@ -44,17 +44,6 @@ function getOrCreateConversationWithUser($user_id)
 
 }
 
-function conversationDetail($user_id)
-{
-    $conversation_id = $_GET['conversation_id'];
-    $conversation = Conversation::getConversationForUser($conversation_id, $user_id);
-    $messages = Message::getMessagesForConversationId($conversation_id);
-    $user = User::getUserById($user_id);
-    $interlocutor = User::getUserById($conversation['interlocutor_id']);
-    $conversation_list_partial = conversationListPartial($user_id);
-    require('view/conversationView.php');
-}
-
 function conversationListPartial($user_id)
 {
 
@@ -85,4 +74,19 @@ function messageDelete($post){
 
     header('Location: /index.php?action=conversation&sub_action=detail&conversation_id=' . $conversation_id);
    
+    }
+
+    function conversationDetail($user_id)
+    {
+        $conversation_id = $_GET['conversation_id'];
+        $conversation = Conversation::getConversationForUser($conversation_id, $user_id);
+        $messages = Message::getMessagesForConversationId($conversation_id);
+        $user = User::getUserById($user_id);
+        $interlocutor = User::getUserById($conversation['interlocutor_id']);
+        $conversation_list_partial = conversationListPartial($user_id);
+    
+        $search = isset( $_GET['content'] ) ? $_GET['content'] : null;
+        $messagesFiltered = Message::filterMessages($conversation_id, $search);
+        
+        require('view/conversationView.php');
     }

@@ -22,6 +22,7 @@
                 </div>
             </div>
             <ul class="list-group list-group-flush mt-2">
+                <?php if(!isset($_GET['username'])): ?>
                 <?php foreach ($friends as $friend): ?>
                     <li class="d-flex justify-content-between list-group-item">
                         <div>
@@ -41,6 +42,28 @@
                         </div>
                     </li>
                 <?php endforeach; ?>
+                <?php else: ?>
+                    <?php foreach ($users as $friend): ?>
+                    <li class="d-flex justify-content-between list-group-item">
+                        <div>
+                            <?php
+                            if ($friend['avatar_url']) {
+                                $avatarUrl = $friend['avatar_url'];
+                            } else {
+                                $avatarUrl = "/static/lib/bootstrap-icons-1.5.0/person-fill.svg";
+                            }
+                            ?>
+                            <img src="<?= $avatarUrl ?>" class="rounded-circle avatar-small mx-2"/>
+                            <?= $friend['username']; ?>
+                        </div>
+
+                        <div class="align-self-center">
+                            <a href="/index.php?action=conversation&sub_action=start_with_user&interlocutor_id=<?= $friend['id'] ?>">Message</a>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+                <?php endif; ?>
+                
             </ul>
         </div>
 

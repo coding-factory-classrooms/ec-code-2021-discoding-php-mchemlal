@@ -3,9 +3,9 @@
 <div class="container-fluid d-flex h-100 characterBackground mt-5">
     <div class="row align-self-center w-100">
         <div class="col-sm-9 col-md-6 col-lg-4 mx-auto auth-container">
-            <h3>Welcome!
+            <h3>Welcome !
             </h3>
-            <p class="text-muted">Please signup to enjoy our application!</p>
+            <p class="text-muted">Join Us to enjoy the <span style="color: #EB449E;">DiScODinG</span> experience !</p>
             <form action="" method="POST">
                 <div class="mb-3">
                     <label for="text" class="form-label text-muted small text-uppercase">Username</label>
@@ -33,7 +33,7 @@
 
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary btn-lg btn-block w-100">Signup</button>
-                    <a href="index.php?action=login" class="btn btn-secondary btn-lg btn-block w-100 mt-3">Login</a>
+                    <a href="index.php?action=login" style="background-color: #EB449E;" class=" btn btn-secondary btn-lg btn-block w-100 mt-3">Login</a>
                 </div>
                 <span class="error-msg"><?= isset( $msg ) ? $msg : null; ?></span>
             </form>

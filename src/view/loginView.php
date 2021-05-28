@@ -3,7 +3,7 @@
 <div class="container-fluid d-flex h-100 characterBackground mt-5">
     <div class="row align-self-center w-100">
         <div class="col-sm-9 col-md-6 col-lg-4 mx-auto auth-container">
-            <h3>Welcome back!
+            <h3>Welcome back to DiScODinG!
             </h3>
             <p class="text-muted">We're so excited to see you again!</p>
             <form action="" method="post">
@@ -23,7 +23,7 @@
                     <a href="index.php?action=signup" class="btn btn-secondary btn-lg btn-block w-100 mt-3">Signup</a>
                 </div>
                 <div>
-                    <a href="index.php?action=contact_user" class="btn btn-secondary btn-lg btn-block w-100 mt-3">Contact</a>
+                    <a href="index.php?action=contact_user" style="background-color: #EB449E;"class="btn btn-secondary btn-lg btn-block w-100 mt-3">Contact</a>
                 </div>
                 <span class="error-msg"><?= isset( $msg ) ? $msg : null; ?></span>
             </form>
