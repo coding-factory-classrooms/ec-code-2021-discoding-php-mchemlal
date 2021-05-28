@@ -7,16 +7,17 @@
 
         <div class="col-sm-6 col-md-9 mt-2" style="overflow: auto; height: 650px;">
         <div style="width: 700px; margin-top: 1%;" class="col-md-6 align-self-center d-flex justify-content-end">
-                        <form class="col-md-6 align-self-center d-flex justify-content-end" method="GET" action="/index.php?action=conversation&sub_action=detail&conversation_id=<?= $conversation_id ?>">
-                            <input type="hidden" name="action" value="conversation" /> 
-                            <input type="hidden" name="sub_action" value="detail" /> 
-                            <input type="hidden" name="conversation_id" value=<?= $conversation_id ?> /> 
-                            <input class="form-control me-2" type="search" id="search" name="content" placeholder="Search" aria-label="Search">
-                        <button id="sendMessage" type="submit" class="btn btn-secondary">Send</button>
-                        </form>
+            <form class="col-md-6 align-self-center d-flex justify-content-end" method="GET" action="/index.php?action=conversation&sub_action=detail&conversation_id=<?= $conversation_id ?>">
+                <input type="hidden" name="action" value="conversation" /> 
+                <input type="hidden" name="sub_action" value="detail" /> 
+                <input type="hidden" name="conversation_id" value=<?= $conversation_id ?> /> 
+                <input class="form-control me-2" type="search" id="search" name="content" placeholder="Search" aria-label="Search">
+                <button id="sendMessage" type="submit" class="btn btn-secondary">Send</button>
+            </form>
         </div>
         <div class="row m-auto">
-    <?php if(!isset($_GET['content'])): ?>
+    
+        <?php if(!isset($_GET['content'])): ?>
         <div id="refresh">
                 <h3 style="color: #EB449E;"><?= $interlocutor['username'] ?></h3>
 
@@ -28,23 +29,22 @@
                     } else {
                         $msgUser = $interlocutor;
                     }
-                    ?>
+                ?>
 
-                    <div class="card flex-row flex-wrap">
-                        <div class="card-header" style="background-color: inherit;">
-                            <?php
+                <div class="card flex-row flex-wrap">
+                    <div class="card-header" style="background-color: inherit;">
+                        <?php
                             if ($msgUser['avatar_url']) {
                                 $avatarUrl = $msgUser['avatar_url'];
                             } else {
                                 $avatarUrl = "/static/lib/bootstrap-icons-1.5.0/person-fill.svg";
                             }
-                            ?>
+                        ?>
                             <img src="<?= $avatarUrl ?>" class="rounded-circle avatar mx-2"/>
-                        </div>
+                    </div>
                         <!-- message de moi -->
-                        <?php if   ($message['user_id'] == $user_id) : ?>
+                    <?php if   ($message['user_id'] == $user_id) : ?>
                         <div class="card-body">
-                            
                             
                             <div class="card-title d-flex">
                                 <div class="flex-grow-1 fw-bold">
@@ -54,8 +54,6 @@
                                     <?= $message['created_at'] ?>
                                 </div>
                             </div>
-
-                            
 
                             <div class="card-text">
                                 <?= $message['content'] ?>
@@ -70,6 +68,7 @@
                             </div>
                             
                         </div>
+
                         <?php else:  ?>
                             <div class="card-body">
                             <div class="card-title d-flex">
@@ -83,12 +82,15 @@
                             <div class="card-text">
                                 <?= $message['content'] ?>
                             </div>
-                        </div>
+                            </div>
                         <?php endif ?>
-                    </div>
+                 </div>
                 <?php endforeach; ?>
-    <?php else: ?>
-            <?php foreach ($messagesFiltered as $message): ?>
+
+        <?php else: ?>
+            
+                <?php foreach ($messagesFiltered as $message): ?>
+
                 <?php 
                    
                     if ($message['user_id'] == $user_id) {
@@ -96,10 +98,10 @@
                     } else {
                         $msgUser = $interlocutor;
                     }
-                    ?>
+                ?>
 
-                    <div class="card flex-row flex-wrap">
-                        <div class="card-header" style="background-color: inherit;">
+               <div class="card flex-row flex-wrap">
+                    <div class="card-header" style="background-color: inherit;">
                             <?php
                             if ($msgUser['avatar_url']) {
                                 $avatarUrl = $msgUser['avatar_url'];
@@ -108,9 +110,9 @@
                             }
                             ?>
                             <img src="<?= $avatarUrl ?>" class="rounded-circle avatar mx-2"/>
-                        </div>
+                    </div>
                         <!-- message de moi -->
-                        <?php if   ($message['user_id'] == $user_id) : ?>
+                    <?php if   ($message['user_id'] == $user_id) : ?>
                         <div class="card-body">
                             
                             
@@ -122,8 +124,6 @@
                                     <?= $message['created_at'] ?>
                                 </div>
                             </div>
-
-                            
 
                             <div class="card-text">
                                 <?= $message['content'] ?>
@@ -138,6 +138,7 @@
                             </div>
                             
                         </div>
+
                         <?php else:  ?>
                             <div class="card-body">
                             <div class="card-title d-flex">
@@ -153,12 +154,12 @@
                             </div>
                         </div>
                         <?php endif ?>
-                    </div>
-                <?php endforeach; ?>
-<?php endif; ?>
-            
+                </div>
 
-            </div>
+                <?php endforeach; ?>
+        <?php endif; ?>
+        
+        </div>
             
             <form class="d-flex mt-4" action="/index.php?action=conversation&sub_action=add_message&conversation_id=<?= $conversation_id ?>" method="post">
                 <div class="flex-grow-1">
@@ -169,7 +170,6 @@
                 </div>
             </form>
             
-
         </div>
     </div>
 </div>

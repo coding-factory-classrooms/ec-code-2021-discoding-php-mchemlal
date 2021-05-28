@@ -4,6 +4,12 @@ require_once('database.php');
 
 class User
 {
+    
+    /**
+     * attributes
+     *
+     * @var mixed
+     */
     protected $id;
     protected $username;
     protected $email;
@@ -12,6 +18,14 @@ class User
     protected $isActive;
     protected $avatar_url;
 
+
+        
+    /**
+     * __construct
+     *
+     * @param  mixed $user
+     * @return void
+     */
     public function __construct( $user = null ) {
         if( $user != null ):
           $this->setId( isset( $user->id ) ? $user->id : null );
@@ -106,6 +120,7 @@ class User
         $this->active_key = $active_key;
     }
 
+    
     public function getActive()
     {
         return $this->isActive;
@@ -139,21 +154,36 @@ class User
     /**************************************
      * -------- GET USER DATA BY ID --------
      ***************************************/
-
+    /**
+     * getUserById 
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public static function getUserById($id)
     {
-        // Open database connection
+        
         $db = init_db();
 
         $req = $db->prepare("SELECT * FROM users WHERE id = ?");
         $req->execute([$id]);
 
-        // Close database connection
+        
         $db = null;
 
         return $req->fetch();
     }
 
+
+    /**************************************
+     * -------- GET USER DATA BY EMAIL --------
+     ***************************************
+    /**
+     * getUserByEmail
+     *
+     * @param  mixed $email
+     * @return void
+     */
     public static function getUserByEmail($email)
     {
         // Open database connection
@@ -168,13 +198,20 @@ class User
         return $req->fetch();
     }
 
-    /***************************************
-     * ------- GET USER DATA BY USERNAME -------
-     ****************************************/
 
+    /***************************************
+     * ------- GET USER DATA BY CREDENSCIALS -------
+     ****************************************/
+    /**
+     * getUserByCredentials
+     *
+     * @param  mixed $email
+     * @param  mixed $password
+     * @return void
+     */
     public static function getUserByCredentials($email, $password)
     {
-        // Open database connection
+        
         $db = init_db();
 
         $req = $db->prepare("SELECT * FROM users WHERE email=? AND password=?");
@@ -182,13 +219,22 @@ class User
             $email,
             $password
         ]);
-
-        // Close database connection
+      
         $db = null;
 
         return $req->fetch();
     }
 
+    
+    /**************************************
+     * -------- GET FRIENDS FOR USERS --------
+     ***************************************/
+    /**
+     * getFriendsForUser
+     *
+     * @param  mixed $user_id
+     * @return array
+     */
     public static function getFriendsForUser($user_id): array
     {
         // Open database connection
@@ -203,6 +249,15 @@ class User
         return $req->fetchAll();
     }
 
+    /**************************************
+     * -------- FIND USER WITH USERNAME --------
+     ***************************************/
+    /**
+     * findUserWithUsername
+     *
+     * @param  mixed $username
+     * @return void
+     */
     public static function findUserWithUsername($username)
     {
         // Open database connection
@@ -218,6 +273,16 @@ class User
     }
 
 
+    /**************************************
+     * -------- ISALREADY FRIENDS --------
+     ***************************************/
+    /**
+     * isAlreadyFriend
+     *
+     * @param  mixed $user_id
+     * @param  mixed $friend_id
+     * @return void
+     */
     public static function isAlreadyFriend($user_id, $friend_id)
     {
         // Open database connection
@@ -239,6 +304,18 @@ class User
         return $isAlreadyFriend;
     }
 
+
+    
+    /**************************************
+     * -------- ADD FRIENDS --------
+     ***************************************/
+    /**
+     * addFriend
+     *
+     * @param  mixed $user_id
+     * @param  mixed $friend_id
+     * @return void
+     */
     public static function addFriend($user_id, $friend_id)
     {
         // Open database connection
@@ -257,6 +334,15 @@ class User
         return $id;
     }
 
+    
+    /**************************************
+     * -------- CREATE USER --------
+     ***************************************/
+    /**
+     * createUser
+     *
+     * @return void
+     */
     public function createUser() {
         $db = init_db();
         
@@ -283,7 +369,14 @@ class User
         endif;
       }
 
-      //generer clé activation compte
+      /**************************************
+     * -------- GENERATE KEY --------
+     ***************************************/
+      /**
+       * generateKey
+       *
+       * @return void
+       */
       public static function generateKey(){
         $db = init_db();
 
@@ -292,7 +385,15 @@ class User
       }
 
       
-      //fonction de hachage password
+      /**************************************
+     * -------- HASH --------
+     ***************************************/
+      /**
+       * hash
+       *
+       * @param  mixed $password
+       * @return void
+       */
       public static function hash($password) {
         $begin_password = substr($password, 3, strlen($password));
         $end_password   = substr($password, 0,3);
@@ -301,7 +402,17 @@ class User
         return hash('sha256', $salt);
       }
 
-      //verifiezr la clé
+      
+    /**************************************
+     * -------- CHECK KEY --------
+     ***************************************/
+      /**
+       * checkKey
+       *
+       * @param  mixed $email
+       * @param  mixed $key
+       * @return void
+       */
       public function checkKey($email, $key){
         $db = init_db();
 
@@ -321,40 +432,57 @@ class User
         }
       }
 
-       //on insere la clé 
-  public function addKey($key, $email){
-    $db = init_db();
-    $req = $db->prepare("UPDATE users SET activation_key = ? WHERE email = ?");
-    $req->execute(array($key, $email));
-  }
+     /**************************************
+     * -------- ADD KEY --------
+     ***************************************/
+       /**
+        * addKey
+        *
+        * @param  mixed $key
+        * @param  mixed $email
+        * @return void
+        */
+       public function addKey($key, $email){
+            $db = init_db();
+            $req = $db->prepare("UPDATE users SET activation_key = ? WHERE email = ?");
+            $req->execute(array($key, $email));
+        }
 
-  
 
-  public static function filterUsers($username = null) : array
-  {
-      // Open database connection
-      $db = init_db();
-      $sql = "SELECT * FROM users WHERE ";
+        /**************************************
+     * -------- FILTER USERS  --------
+     ***************************************/
+        /**
+         * filterUsers
+         *
+         * @param  mixed $username
+         * @return array
+         */
+        public static function filterUsers($username = null) : array
+        {
+            // Open database connection
+            $db = init_db();
+            $sql = "SELECT * FROM users WHERE ";
 
-      $fields = [];
+            $fields = [];
 
-      if ($username != null) {
-          array_push($fields, "username LIKE '%" . $username . "%'");
-      }
+            if ($username != null) {
+                array_push($fields, "username LIKE '%" . $username . "%'");
+            }
 
-      if (sizeof($fields) > 0) {
-          $sql .= join(" AND ", $fields);
-      }
-      else {
-          $sql .= "1";
-      }
-      $sql .= " ORDER BY username DESC";
+            if (sizeof($fields) > 0) {
+                $sql .= join(" AND ", $fields);
+            }
+            else {
+                $sql .= "1";
+            }
+            $sql .= " ORDER BY username DESC";
 
-      $req = $db->prepare($sql);
-      $req->execute();
-      // Close database connection
-      $db = null;
-      return $req->fetchAll(PDO::FETCH_ASSOC);
-  }
-    
-}
+            $req = $db->prepare($sql);
+            $req->execute();
+            // Close database connection
+            $db = null;
+            return $req->fetchAll(PDO::FETCH_ASSOC);
+        }
+            
+        }

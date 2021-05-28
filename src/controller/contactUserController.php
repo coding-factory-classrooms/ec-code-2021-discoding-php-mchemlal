@@ -1,8 +1,15 @@
 <?php
 require_once( 'model/user.php' );
-//require_once( 'model/Media.php' );
 require_once( 'model/message.php' );
 
+/****************************************
+ * ----- FUNCTION SEND EMAIL -----
+ *****************************************/
+/**
+ * sendMail
+ *
+ * @return void
+ */
 function sendMail(){
 
     if(!empty($_POST)){
@@ -12,8 +19,7 @@ function sendMail(){
 
     $message_erreur = null;
 
-    //form validation, returning $error_msg or $success_msg to the user
-
+    
     if(empty($expediteur)){
         $message_erreur =  "Le nom ne peut pas être vide";
      }
@@ -50,9 +56,16 @@ function sendMail(){
 }  
 
 
-
+/****************************************
+ * ----- FUNCTION FORM CONTACT -----
+ *****************************************/
+/**
+ * formContact
+ *
+ * @return void
+ */
 function formContact(){
-    // A revoir pour adapter au formulaire de contact interne avec la fonction du haut 
+    
 
 $user_id = isset( $_SESSION['user_id'] ) ? $_SESSION['user_id'] : false;
 
@@ -64,8 +77,9 @@ if(isset( $user_id)){
     $userData = $user->getUserById($user->getId());
 
     $emailDeSession =  isset($userData['email']) ? $userData['email'] : '';
+
     
     }
-     require('view/contactView.php');
-
+    require('view/contactView.php');
 }
+

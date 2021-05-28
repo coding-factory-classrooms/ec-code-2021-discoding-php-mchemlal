@@ -5,14 +5,20 @@ error_reporting(E_ALL);
 
 date_default_timezone_set('Europe/Paris');
 
-require_once('controller/conversationController.php');
-require_once('controller/friendController.php');
-require_once('controller/loginController.php');
-require_once('controller/signupController.php');
-require_once('controller/activationController.php');
-require_once('controller/contactUserController.php');
-require_once('controller/page404Controller.php');
+// require_once('controller/conversationController.php');
+// require_once('controller/friendController.php');
+// require_once('controller/loginController.php');
+// require_once('controller/signupController.php');
+// require_once('controller/activationController.php');
+// require_once('controller/contactUserController.php');
+// require_once('controller/page404Controller.php');
 
+$controller = scandir('controller');
+unset($controller[0]);
+unset($controller[1]);
+foreach($controller as $controllers ){
+  require_once('controller/'. $controllers);
+}
 
 
     
@@ -66,7 +72,6 @@ if (isset($_GET['action'])) {
     }
 } else {
     
-
     if ($user_id){
         friendPage();
     } else {

@@ -2,6 +2,14 @@
 
 require_once('conversationController.php');
 
+/****************************
+ * ----- LOAD FRIEND PAGE -----
+ ****************************/
+/**
+ * friendPage
+ *
+ * @return void
+ */
 function friendPage()
 {
     $user_id = $_SESSION['user_id'] ?? false;
@@ -21,6 +29,16 @@ function friendPage()
     }
 }
 
+
+/**********************************
+ * ----- FUNCTION ADD FRIEND -----
+ ***********************************/
+/**
+ * addFriend
+ *
+ * @param  mixed $user_id
+ * @return void
+ */
 function addFriend($user_id)
 {
     $message = '';
@@ -37,6 +55,7 @@ function addFriend($user_id)
                     User::addFriend($user_id, $newFriend['id']);
                     $message = 'Friend ' . $newFriend['username'] . ' added !';
                 endif;
+
             else:
                 $message = 'user not found!';
             endif;
@@ -49,6 +68,16 @@ function addFriend($user_id)
     require('view/friendAddView.php');
 }
 
+
+/**************************************
+ * ----- FUNCTION DISPLAY FRIEND -----
+ **************************************/
+/**
+ * displayFriends
+ *
+ * @param  mixed $user_id
+ * @return void
+ */
 function displayFriends($user_id){
     $user_data = User::getUserById($user_id);
     $search = isset( $_GET['username'] ) ? $_GET['username'] : null;
@@ -60,18 +89,3 @@ function displayFriends($user_id){
     require('view/friendView.php');
 }
 
-// function searchFriend($post){
-//     echo 'salut ouais';
-// require 'view/friendView.php';  
-// }
-
-// function displayFriends($user_id)
-// {
-//     $user_data = User::getUserById($user_id);
-//     $search = isset( $_GET['username'] ) ? $_GET['username'] : null;
-
-//     $users = User::filterUsers( $search );
-//     $friends = User::getFriendsForUser($user_id);
-//     $conversation_list_partial = conversationListPartial($user_id);
-//     require('view/friendView.php');
-// }
