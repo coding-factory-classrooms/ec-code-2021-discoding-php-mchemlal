@@ -6,8 +6,9 @@
         <?= $conversation_list_partial ?>
 
         <div class="col-sm-6 col-md-9 mt-2" style="overflow: auto; height: 650px;">
+        <div id="refresh">
             <div class="row m-auto">
-                <h3><?= $interlocutor['username'] ?></h3>
+                <h3 style="color: #EB449E;"><?= $interlocutor['username'] ?></h3>
 
                 <?php foreach ($messages
 
@@ -76,15 +77,16 @@
                         <?php endif ?>
                     </div>
                 <?php endforeach; ?>
+            </div>
 
             </div>
             
             <form class="d-flex mt-4" action="/index.php?action=conversation&sub_action=add_message&conversation_id=<?= $conversation_id ?>" method="post">
                 <div class="flex-grow-1">
-                    <input type="text" class="form-control" id="content" name="content"/>
+                    <input style="border: 1px solid #EB449E;" type="text" class="form-control" id="content" name="content"/>
                 </div>
                 <div class="mx-2">
-                    <button id="sendMessage" type="submit" class="btn btn-secondary">Envoyer</button>
+                    <button id="sendMessage" type="submit" class="btn btn-secondary">SEND</button>
                 </div>
             </form>
             
@@ -95,6 +97,7 @@
 
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/static/js/page_conversation_detail.js"></script>
 
 <?php $content = ob_get_clean(); ?>

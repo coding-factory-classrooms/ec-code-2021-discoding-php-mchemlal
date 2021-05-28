@@ -33,13 +33,13 @@ function login($post)
               $_SESSION['username'] = $userData['username'];
               header('Location:index.php');
           }else{
-            $msg = "Vous devez activer votre compte";
+            $msg = "You need to activate your account";
           }
         }else{
-            $msg = "Les informations ne sont pas reconnues";
+            $msg = "Information unknown";
         }
     }else{
-    $msg = "Remplir tous les champs";
+    $msg = "Make sure you fill into every field";
     }
     require('view/loginView.php');
 }

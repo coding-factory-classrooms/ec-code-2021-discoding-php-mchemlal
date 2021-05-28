@@ -15,12 +15,13 @@
         </li>
         
         <li class="list-group-item">
-            <a href="/index.php?action=logout">
+            <a href="/index.php?action=logout" style="color: #EB449E">
                 <i class="bi-people-fill mx-2"></i>Logout
             </a>
         </li>
     </ul>
     <ul class="list-group border-0 liste-amis">
+        <h6 class="conversation-partial">CONVERSATIONS</h6>
         <?php foreach ($conversations as $conv): ?>
             <li class="list-group-item border-0">
 

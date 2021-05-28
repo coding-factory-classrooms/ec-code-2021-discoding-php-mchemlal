@@ -8,7 +8,7 @@
             <form method="POST" action="" id="form" class="custom-form" >
 
             <div class="form-group">
-              <label for="lastPass">Expediteur</label>
+              <label for="lastPass">Sender</label>
               <?php if(isset($_SESSION['user_id'])) : ?>
               <input type="text" name="expediteur" value="<?= $emailDeSession;?>" id="expediteur" class="form-control" 
               maxlength="50" style="font-style:italic;"/>
@@ -19,7 +19,7 @@
                 
             </div>
             <div class="form-group">
-              <label for="lastPass">Destinataire</label>
+              <label for="lastPass">Receiver</label>
               <span type="text"  value="contact@discoding.fr" class="form-control" contentEditable="false"
               maxlength="50" style="font-style:italic;">contact@discoding.fr</span>
             </div>

@@ -7,6 +7,13 @@
         <div class="col-sm-6 col-md-9 mt-2">
             <div class="row">
                 <div class="col-10">
+                    <div style="width: 700px; margin-top: 1%;" class="col-md-6 align-self-center d-flex justify-content-end">
+                        <form class="col-md-6 align-self-center d-flex justify-content-end" method="get" action="/index.php?action=friend">
+                            <input type="search" id="search" name="username" class="form-control"
+                            placeholder="Search">
+                            <button id="sendMessage" type="submit" class="btn btn-secondary">Send</button>
+                        </form>
+                    </div>
                     <h2><i class="bi-people-fill mx-2"></i>Friends</h2>
                 </div>
                 <div class="col-2 align-self-center d-flex justify-content-end">

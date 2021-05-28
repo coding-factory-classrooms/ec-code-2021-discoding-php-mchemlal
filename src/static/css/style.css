@@ -35,7 +35,6 @@ body {
 }
 
 .liste-amis {
-    /* Valeurs avec un mot-clé */
     height: 300px;
     overflow: auto;
 }
@@ -48,12 +47,9 @@ body {
     font-size: 15px !important;
 }
 
-.fixed-nav-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-    width: 100%;
-    height: 50px;
-    background-color: #00a087;
+.conversation-partial {
+    text-align: center;
+    margin-bottom: -3px;
+    padding: 8px 0px 10px 0;
+    background-color: #EB449E;
 }

@@ -32,13 +32,13 @@ function addFriend($user_id)
             if($newFriend != false):
         
                 if (User::isAlreadyFriend($user_id, $newFriend['id'])) :
-                    $message = 'Déjà ami avec ' . $newFriend['username'] . ' !';
+                    $message = 'You are already friend with ' . $newFriend['username'] . ' !';
                 else :
                     User::addFriend($user_id, $newFriend['id']);
-                    $message = 'Ami ' . $newFriend['username'] . ' ajouté !';
+                    $message = 'Friend ' . $newFriend['username'] . ' added !';
                 endif;
             else:
-                $message = 'L\'utilisateur n\'a pas été trouvé !';
+                $message = 'user not found!';
             endif;
     endif;
     
@@ -49,15 +49,29 @@ function addFriend($user_id)
     require('view/friendAddView.php');
 }
 
-function displayFriends($user_id)
-{
+function displayFriends($user_id){
     $user_data = User::getUserById($user_id);
+    $search = isset( $_GET['username'] ) ? $_GET['username'] : null;
+
+
+    $users = User::filterUsers( $search );
     $friends = User::getFriendsForUser($user_id);
     $conversation_list_partial = conversationListPartial($user_id);
     require('view/friendView.php');
 }
 
-function searchFriend($post){
-    echo 'salut ouais';
-require 'view/friendView.php';  
-}
+// function searchFriend($post){
+//     echo 'salut ouais';
+// require 'view/friendView.php';  
+// }
+
+// function displayFriends($user_id)
+// {
+//     $user_data = User::getUserById($user_id);
+//     $search = isset( $_GET['username'] ) ? $_GET['username'] : null;
+
+//     $users = User::filterUsers( $search );
+//     $friends = User::getFriendsForUser($user_id);
+//     $conversation_list_partial = conversationListPartial($user_id);
+//     require('view/friendView.php');
+// }

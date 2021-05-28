@@ -31,16 +31,16 @@ function signup($post){
                 // si adresse dispo
                 if($user->createUser()){                            //getkey
                     Message::sendActivationMail($user->getEmail(), $user->getActiveKey());
-                    $msg ="Vous allez recevoir un mail pour activer votre compte";
+                    $msg ="We have just sent you an activation email";
                 }else{
 
-                    $msg ="Ce compte existe déjà, réessayez";
+                    $msg ="This account already exist";
                 }
              }else{
-                 $msg = 'les mots de passes ne correspondent pas';
+                 $msg = 'both passwords don\'t match';
              }
         }else{
-            $msg ="Veuillez remplir tous les champs!";
+            $msg ="Make sure you fill into every field!";
         }
 
         require('view/signupView.php');
