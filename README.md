@@ -1,5 +1,13 @@
 # DisCoding project
 
+ACTIVATION FUNCTIONALITY FOR THE SIGN UP FOR:
+
+-first sign up with the form
+-go the the url bar it's the url link that the user will get by email
+-type into the url bar index.php?action=activation&email="paste the email found into the user database"&key="paste the activation key found in the user database"
+-to be able to use the related user, you have to set the key to active (0 to 1) in the user database
+
+
 ## Setup
 1. You have to use a local server such as [Wamp](https://wampserver.com/) or [Mamp](https://www.mamp.info/)
 1. Pull the repo in the `www/` directory of your local server
