@@ -9,7 +9,9 @@
             <div class="row m-auto">
                 <h3><?= $interlocutor['username'] ?></h3>
 
-                <?php foreach ($messages as $message):
+                <?php foreach ($messages
+
+                               as $message):
                     if ($message['user_id'] == $user_id) {
                         $msgUser = $user;
                     } else {
@@ -28,7 +30,37 @@
                             ?>
                             <img src="<?= $avatarUrl ?>" class="rounded-circle avatar mx-2"/>
                         </div>
+                        <!-- message de moi -->
+                        <?php if   ($message['user_id'] == $user_id) : ?>
                         <div class="card-body">
+                            
+                            
+                            <div class="card-title d-flex">
+                                <div class="flex-grow-1 fw-bold">
+                                    <?= $msgUser['username'] ?>
+                                </div>
+                                <div class="text-muted fs-6">
+                                    <?= $message['created_at'] ?>
+                                </div>
+                            </div>
+
+                            
+
+                            <div class="card-text">
+                                <?= $message['content'] ?>
+                            </div>
+
+                            <div class="d-flex justify-content-end">
+                            <form method="POST" action="/index.php?action=conversation&sub_action=delete_message&conversation_id=<?= $conversation_id ?>">
+                                <button type="submit" name="delete" style="background:none; border:none; color:#EB449E" class="bi bi-trash" aria-label="Close">
+                                <input type="hidden" value="<?= isset($message['id']) ? $message['id'] : '' ?>" name="id_message"/>
+                                </button>
+                            </form>
+                            </div>
+                            
+                        </div>
+                        <?php else:  ?>
+                            <div class="card-body">
                             <div class="card-title d-flex">
                                 <div class="flex-grow-1 fw-bold">
                                     <?= $msgUser['username'] ?>
@@ -41,6 +73,7 @@
                                 <?= $message['content'] ?>
                             </div>
                         </div>
+                        <?php endif ?>
                     </div>
                 <?php endforeach; ?>
 

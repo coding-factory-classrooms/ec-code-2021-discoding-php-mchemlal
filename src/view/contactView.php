@@ -1,7 +1,7 @@
 <?php ob_start(); ?>
 <div class="container-fluid d-flex h-100 characterBackground mt-5">
     <div class="row align-self-center w-100">
-        <div class="col-md-4 mx-auto auth-container">
+        <div class="col-xs-12 col-sm-9 col-md-6 col-lg-4 mx-auto auth-container">
             <h3>Contact Form
             </h3>
             <p class="text-muted">Feel free to reach out if needed !</p>
@@ -9,8 +9,14 @@
 
             <div class="form-group">
               <label for="lastPass">Expediteur</label>
+              <?php if(isset($_SESSION['user_id'])) : ?>
               <input type="text" name="expediteur" value="<?= $userData['email'];?>" id="expediteur" class="form-control" 
               maxlength="50" style="font-style:italic;"/>
+              <?php else: ?>
+              <input type="text" name="expediteur" value="" id="expediteur" class="form-control" 
+              maxlength="50" style="font-style:italic;"/>
+              <?php endif; ?>
+                
             </div>
             <div class="form-group">
               <label for="lastPass">Destinataire</label>

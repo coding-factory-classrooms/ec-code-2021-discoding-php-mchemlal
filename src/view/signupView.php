@@ -2,7 +2,7 @@
 
 <div class="container-fluid d-flex h-100 characterBackground mt-5">
     <div class="row align-self-center w-100">
-        <div class="col-4 mx-auto auth-container">
+        <div class="col-sm-9 col-md-6 col-lg-4 mx-auto auth-container">
             <h3>Welcome!
             </h3>
             <p class="text-muted">Please signup to enjoy our application!</p>

@@ -54,6 +54,7 @@ if (isset($_GET['action'])) {
 
         case 'conversation':
             conversationPage();
+                if ( !empty( $_POST ) ) {messageDelete( $_POST );}
             break;
 
         case 'friend':
